@@ -93,7 +93,6 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
 #        c.append(pos=pt)
         
 scene = display(title='Radioactive Decay', x=0, y=0, background=(0,0,0)) #setting the size of the display screen
-
 #wirecube(100) #create the cube
 #wirecube(125)
 #wirecube(150)
@@ -151,4 +150,3 @@ metal4 = box(pos=(0,-200,0), length=400, height=5, width=400, material = materia
 
 #exec(open('test2.py').read()) #execute test2 script
 reaction()
-
