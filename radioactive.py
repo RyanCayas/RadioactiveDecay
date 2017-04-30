@@ -2,10 +2,10 @@ from visual import*
 from visual.controls import *
 import numpy
 
-def cos(x):
+def cos(x): #returns the cosine equivalent of the angle (in degrees)
     return numpy.cos(x*numpy.pi/180)
 
-def sin(x):
+def sin(x): #returns the sine equivalent of the angle (in degrees)
     return numpy.sin(x*numpy.pi/180)
 
 def reaction(): #sets what type of reaction will happen based on the user's input
@@ -14,16 +14,14 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
         #triggers the commands for alpha decay
         while True:
             rate(100)
-            #print(alpha1.pos, alpha2.pos, alpha3.pos, alpha4.pos)
-            alpha1.pos += alpha1.velocity*1
-            alpha2.pos += alpha2.velocity*1
-            alpha3.pos += alpha3.velocity*1
-            alpha4.pos += alpha4.velocity*1
+            alpha1.pos += alpha1.velocity
+            alpha2.pos += alpha2.velocity
+            alpha3.pos += alpha3.velocity
+            alpha4.pos += alpha4.velocity
             if alpha3.pos.x >= paper1.pos.x - 5 or alpha1.pos.y >= paper3.pos.y - 5 or alpha2.pos.x <= paper2.pos.x + 5 or alpha4.pos.y <= paper4.pos.y + 5:
                 #when the particle has hit the boundaries of the paper
                 if (alphaangle-45)%90 == 0:
                     #special case when the angle is a multiple of 45 degrees
-                    print("IM HERE")
                     alpha1.velocity.x = -alpha1.velocity.x
                     alpha2.velocity.x = -alpha2.velocity.x
                     alpha3.velocity.x = -alpha3.velocity.x
@@ -44,30 +42,45 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
                     alpha2.velocity.y = -alpha2.velocity.y
                     alpha3.velocity.y = -alpha3.velocity.y
                     alpha4.velocity.y = -alpha4.velocity.y
-                #b1.set_visible = True
-                
-                counter = 1
+            counter = 1
     if trigger == 'b' or trigger == 'B':
+        #triggers the commands for beta decay
         while True:
             rate(100)
-            electron.pos += electron.velocity*1
-            if electron.pos.x >= wood1.pos.x - 5:
-                counter = 1
-                break
+            electron.pos += electron.velocity
+            if electron.pos.x >= wood1.pos.x - 5 or electron.pos.y >= wood3.pos.y - 5 or electron.pos.x <= wood2.pos.x + 5 or electron.pos.y <= wood4.pos.y + 5:
+                #when the electron has hit the boundaries of the wood
+                if (electronangle-45)%90 == 0:
+                    #special case when the angle is a multiple of 45 degrees
+                    electron.velocity.x = -electron.velocity.x
+                    electron.velocity.y = -electron.velocity.y
+                elif electron.pos.x >= wood1.pos.x - 5 or electron.pos.x <= wood2.pos.x + 5:
+                    #when the electron hits the right or left boundary
+                    electron.velocity.x = -electron.velocity.x
+                else:
+                    #when the electron hits the top or bottom boundary
+                    electron.velocity.y = -electron.velocity.y
+            counter = 1
+                
     if trigger == 'g' or trigger == 'G':
-        yinvert = 0
+        #triggers the commands for gamma decay
         while True:
             rate(100)
-            if yinvert == 0:
-                gamma.pos += gamma.velocity*1
-            else:
-                gamma.pos.x += gamma.velocity.x
-                gamma.pos.y += gamma.velocity.y
-            if yinvert == 1: yinvert = 0
-            else: yinvert = 1
-            if gamma.pos.x >= metal1.pos.x - 5:
-                counter = 1
-                break
+            gamma.pos += gamma.velocity
+            if gamma.pos.x >= metal1.pos.x - 5 or gamma.pos.y >= metal3.pos.y - 5 or gamma.pos.x <= metal2.pos.x + 5 or gamma.pos.y <= metal4.pos.y + 5:
+                #when the gamma ray has hit the boundaries of the metal
+                if (gammaangle-45)%90 == 0:
+                    #special case when the angle is a multiple of 45 degrees
+                    gamma.velocity.x = -gamma.velocity.x
+                    gamma.velocity.y = -gamma.velocity.y
+                elif gamma.pos.x >= metal1.pos.x - 5 or gamma.pos.x <= metal2.pos.x + 5:
+                    #when the gamma ray hits the right or left boundary
+                    gamma.velocity.x = -gamma.velocity.x
+                else:
+                    #when the gamma ray hits the top or bottom boundary
+                    gamma.velocity.y = -gamma.velocity.y
+            counter = 1
+
             
 #def wirecube (s): #setting the cube borders
 #    c=curve (color=color.white, radius=1)
@@ -90,12 +103,16 @@ atom = sphere(pos=(0,0,0), radius=20, color=color.white)
 
 #---creating the electron---------
 electron = sphere(pos=(0,5,0), radius=2, color=color.yellow)
-electron.velocity = vector(5,0,0)
+electronangle = 60
+electronvelocity = 10
+electron.velocity = vector(electronvelocity*cos(electronangle),electronvelocity*sin(electronangle),0)
 #---------------------------------
 
 #---creating the gamma ray--------
-gamma = sphere(pos=(0,5,0), radius=10, color=color.yellow, make_trail=true)
-gamma.velocity = vector(50,50,0)
+gamma = sphere(pos=(0,5,0), radius=1, color=color.yellow, make_trail=true, retain=10)
+gammaangle = 60
+gammavelocity = 10
+gamma.velocity = vector(gammavelocity*cos(gammaangle),gammavelocity*sin(gammaangle),0)
 #---------------------------------
 
 #---creating the alpha particle---
@@ -103,7 +120,7 @@ alpha1 = sphere(pos=(0,5,0), radius=5, color=color.white)
 alpha2 = sphere(pos=(-5,0,0), radius=5, color=color.red)
 alpha3 = sphere(pos=(5,0,0), radius=5, color=color.red)
 alpha4 = sphere(pos=(0,-5,0), radius=5, color=color.white)
-alphaangle = 135
+alphaangle = 60
 alphavelocity = 5
 alpha1.velocity = vector(alphavelocity*cos(alphaangle),alphavelocity*sin(alphaangle),0)
 alpha2.velocity = vector(alphavelocity*cos(alphaangle),alphavelocity*sin(alphaangle),0)
@@ -132,5 +149,6 @@ metal3 = box(pos=(0,200,0), length=400, height=5, width=400, material = material
 metal4 = box(pos=(0,-200,0), length=400, height=5, width=400, material = materials.silver)
 #---------------------------------
 
+#exec(open('test2.py').read()) #execute test2 script
+reaction()
 
-if counter == 0: reaction()
