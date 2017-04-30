@@ -21,30 +21,25 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
             alpha4.pos += alpha4.velocity*1
             if alpha3.pos.x >= paper1.pos.x - 5 or alpha1.pos.y >= paper3.pos.y - 5 or alpha2.pos.x <= paper2.pos.x + 5 or alpha4.pos.y <= paper4.pos.y + 5:
                 #when the particle has hit the boundaries of the paper
-                if alpha3.pos.x >= paper1.pos.x - 5:
-                    #when the particle hits the right boundary
-                    print("alpha3",alpha3.pos.x)
+                if (alphaangle-45)%90 == 0:
+                    #special case when the angle is a multiple of 45 degrees
+                    print("IM HERE")
                     alpha1.velocity.x = -alpha1.velocity.x
                     alpha2.velocity.x = -alpha2.velocity.x
                     alpha3.velocity.x = -alpha3.velocity.x
                     alpha4.velocity.x = -alpha4.velocity.x
-                elif alpha1.pos.y >= paper3.pos.y - 5:
-                    #when the particle hits the top boundary
-                    print("alpha1",alpha1.pos.y)
                     alpha1.velocity.y = -alpha1.velocity.y
                     alpha2.velocity.y = -alpha2.velocity.y
                     alpha3.velocity.y = -alpha3.velocity.y
                     alpha4.velocity.y = -alpha4.velocity.y
-                elif alpha2.pos.x <= paper2.pos.x + 5:
-                    #when the particle hits the left boundary
-                    print("alpha2",alpha2.pos.x)
+                elif alpha3.pos.x >= paper1.pos.x - 5 or alpha2.pos.x <= paper2.pos.x + 5:
+                    #when the particle hits the right or left boundary
                     alpha1.velocity.x = -alpha1.velocity.x
                     alpha2.velocity.x = -alpha2.velocity.x
                     alpha3.velocity.x = -alpha3.velocity.x
                     alpha4.velocity.x = -alpha4.velocity.x
                 else:
-                    #when the particle hits the bottom boundary
-                    print("alpha4",alpha4.pos.y)
+                    #when the particle hits the top or bottom boundary
                     alpha1.velocity.y = -alpha1.velocity.y
                     alpha2.velocity.y = -alpha2.velocity.y
                     alpha3.velocity.y = -alpha3.velocity.y
@@ -108,7 +103,7 @@ alpha1 = sphere(pos=(0,5,0), radius=5, color=color.white)
 alpha2 = sphere(pos=(-5,0,0), radius=5, color=color.red)
 alpha3 = sphere(pos=(5,0,0), radius=5, color=color.red)
 alpha4 = sphere(pos=(0,-5,0), radius=5, color=color.white)
-alphaangle = 45
+alphaangle = 135
 alphavelocity = 5
 alpha1.velocity = vector(alphavelocity*cos(alphaangle),alphavelocity*sin(alphaangle),0)
 alpha2.velocity = vector(alphavelocity*cos(alphaangle),alphavelocity*sin(alphaangle),0)
