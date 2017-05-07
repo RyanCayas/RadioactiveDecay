@@ -1,16 +1,62 @@
 from visual import*
 from visual.controls import *
 import numpy
-import sys
-import os
-#import tkMessageBox
 
+def home():
+    exec(open('GUI.py').read())
+    scene.close()
+    
 def restart():
-    """Restarts the current program.
-    Note: this function does not return. Any cleanup action (like
-    saving data) must be done before calling this function."""
-    python = sys.executable
-    os.execl(python, python, * sys.argv)
+    global atom
+    global electron
+    global electronangle
+    global electronvelocity
+    global gamma
+    global gammaangle
+    global gammavelocity
+    global alpha1
+    global alpha2
+    global alpha3
+    global alpha4
+    global alphaangle
+    global alphavelocity
+  
+    atom = sphere(pos=(-80,0,0), radius=20, color=color.white)
+
+    #---creating the electron---------
+    electron.visible = False
+    electron = sphere(pos=(-80,5,0), radius=2, color=color.yellow)
+    electronangle = 20
+    electronvelocity = 10
+    electron.velocity = vector(electronvelocity*cos(electronangle),electronvelocity*sin(electronangle),0)
+    #---------------------------------
+
+    #---creating the gamma ray--------
+    gamma.visible = False
+    gamma = sphere(pos=(-80,5,0), radius=1, color=color.yellow, make_trail=true, retain=10)
+    gammaangle = 20
+    gammavelocity = 10
+    gamma.velocity = vector(gammavelocity*cos(gammaangle),gammavelocity*sin(gammaangle),0)
+    #---------------------------------
+
+    #---creating the alpha particle---
+    alpha1.visible = False
+    alpha2.visible = False
+    alpha3.visible = False
+    alpha4.visible = False
+    alpha1 = sphere(pos=(-80,5,0), radius=5, color=color.white)
+    alpha2 = sphere(pos=(-85,0,0), radius=5, color=color.red)
+    alpha3 = sphere(pos=(-75,0,0), radius=5, color=color.red)
+    alpha4 = sphere(pos=(-80,-5,0), radius=5, color=color.white)
+    alphaangle = 30
+    alphavelocity = 5
+    alpha1.velocity = vector(alphavelocity*cos(alphaangle),alphavelocity*sin(alphaangle),0)
+    alpha2.velocity = vector(alphavelocity*cos(alphaangle),alphavelocity*sin(alphaangle),0)
+    alpha3.velocity = vector(alphavelocity*cos(alphaangle),alphavelocity*sin(alphaangle),0)
+    alpha4.velocity = vector(alphavelocity*cos(alphaangle),alphavelocity*sin(alphaangle),0)
+    #---------------------------------
+
+    print("HELLO WORLD")
 
 def cos(x): #returns the cosine equivalent of the angle (in degrees)
     return numpy.cos(x*numpy.pi/180)
@@ -19,8 +65,23 @@ def sin(x): #returns the sine equivalent of the angle (in degrees)
     return numpy.sin(x*numpy.pi/180)
 
 def reaction(): #sets what type of reaction will happen based on the user's input
+    global atom
+    global electron
+    global electronangle
+    global electronvelocity
+    global gamma
+    global gammaangle
+    global gammavelocity
+    global alpha1
+    global alpha2
+    global alpha3
+    global alpha4
+    global alphaangle
+    global alphavelocity
+    
     trigger = scene.kb.getkey()
     if trigger == 'a' or trigger == 'A':
+        restart()
         #triggers the commands for alpha decay
         while True:
             rate(100)
@@ -31,47 +92,25 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
 
             if alpha3.pos.x >= paper1.pos.x - 5:
                 #when the particle has hit the boundaries of the paper
-                if (alphaangle-45)%90 == 0:
-                    #special case when the angle is a multiple of 45 degrees
-                    alpha1.velocity.x = -alpha1.velocity.x
-                    alpha2.velocity.x = -alpha2.velocity.x
-                    alpha3.velocity.x = -alpha3.velocity.x
-                    alpha4.velocity.x = -alpha4.velocity.x
-                    alpha1.velocity.y = -alpha1.velocity.y
-                    alpha2.velocity.y = -alpha2.velocity.y
-                    alpha3.velocity.y = -alpha3.velocity.y
-                    alpha4.velocity.y = -alpha4.velocity.y
-                else:
-                    #when the particle hits the right or left boundary
-                    alpha1.velocity.x = -alpha1.velocity.x
-                    alpha2.velocity.x = -alpha2.velocity.x
-                    alpha3.velocity.x = -alpha3.velocity.x
-                    alpha4.velocity.x = -alpha4.velocity.x
-            if alpha3.pos.x <-100 or alpha3.pos.y >100:
-                tkMessageBox.showinfo(title="Greetings", message="Hello World!")
-                restart()
-            counter = 1
+                alpha1.velocity=vector(0,0,0)
+                alpha2.velocity=vector(0,0,0)
+                alpha3.velocity=vector(0,0,0)
+                alpha4.velocity=vector(0,0,0)
+                break
+
     if trigger == 'b' or trigger == 'B':
+        restart()
         #triggers the commands for beta decay
         while True:
             rate(100)
             electron.pos += electron.velocity
             if electron.pos.x >= wood1.pos.x - 5:
                 #when the electron has hit the boundaries of the wood
-                if (electronangle-45)%90 == 0:
-                    #special case when the angle is a multiple of 45 degrees
-                    electron.velocity.x = -electron.velocity.x
-                    electron.velocity.y = -electron.velocity.y
-                else:
-                    #when the electron hits the right or left boundary
-                    electron.velocity.x = -electron.velocity.x
-
-            if electron.pos.x <-100 or electron.pos.y >100:
-                tkMessageBox.showinfo(title="Greetings", message="Hello World!")
-                restart()
-            counter = 1
+                electron.velocity=vector(0,0,0)
+                break
                 
     if trigger == 'g' or trigger == 'G':
+        restart()
         #triggers the commands for gamma decay
         while True:
             rate(100)
@@ -79,17 +118,8 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
 
             if gamma.pos.x >= metal1.pos.x - 5:
                 #when the gamma ray has hit the boundaries of the metal
-                if (gammaangle-45)%90 == 0:
-                    #special case when the angle is a multiple of 45 degrees
-                    gamma.velocity.x = -gamma.velocity.x
-                    gamma.velocity.y = -gamma.velocity.y
-                else:
-                    #when the gamma ray hits the right or left boundary
-                    gamma.velocity.x = -gamma.velocity.x
-
-            counter = 1
-
-            
+                gamma.velocity=vector(0,0,0)
+                break
             
 def wirecube (s): #setting the cube borders
     c=curve (color=color.white, radius=1)
@@ -101,19 +131,16 @@ def wirecube (s): #setting the cube borders
     for pt in pts:
         c.append(pos=pt)
 
-
 #the controls window
-c = controls(x=0, y=0, width=350, height=350, range=60)
-bl = button(pos=(-30,30), height=30, width=40, text='Reset', action=lambda: restart())
+c = controls(x=0, y=0, width=300, height=200, range=60)
+bl = button(pos=(-30,0), height=30, width=40, text='HOME', action=lambda: home())
+b2 = button(pos=(30,0), height=30, width=40, text='RESET', action=lambda: restart())
 
 scene = display(title='Radioactive Decay', x=350, y=0, background=(0,0,0)) #setting the size of the display screen
+#scene.material = materials.plastic
 wirecube(100) #create the cube
-#wirecube(125)
-#wirecube(200)
-counter = 0
 
-
-atom = sphere(pos=(-80,0,0), radius=20, color=color.white)
+atom = sphere(pos=(-80,0,0), radius=20, color=color.white, material = materials.plastic)
 
 #---creating the electron---------
 electron = sphere(pos=(-80,5,0), radius=2, color=color.yellow)
@@ -155,4 +182,5 @@ metal1 = box(pos=(100,0,0), length=5, height=200, width=200, material = material
 #---------------------------------
 
 #exec(open('test2.py').read()) #execute test2 script
-reaction()
+while True:
+    reaction()
