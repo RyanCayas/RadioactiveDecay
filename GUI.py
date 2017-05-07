@@ -9,14 +9,10 @@ from Tkinter import *
 main=Tk()
 main.title("Main Menu")
 
-def open1():
 
-    filename = askopenfilename(parent=main)
-    print(filename)
-    f = open(filename)
-    txt = f.read()
-    print txt
-    f.close()
+def open1():
+    main.withdraw()
+    import radioactive
 
 TitlePage = Label(main, text = "Main Menu", font = "Jokerman 50")
 TitlePage.pack()
