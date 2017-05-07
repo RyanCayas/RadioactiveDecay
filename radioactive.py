@@ -1,6 +1,17 @@
 from visual import*
 from visual.controls import *
 import numpy
+import sys
+import os
+import tkMessageBox
+
+
+def restart():
+    """Restarts the current program.
+    Note: this function does not return. Any cleanup action (like
+    saving data) must be done before calling this function."""
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
 
 def cos(x): #returns the cosine equivalent of the angle (in degrees)
     return numpy.cos(x*numpy.pi/180)
@@ -36,6 +47,9 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
                     alpha2.velocity.x = -alpha2.velocity.x
                     alpha3.velocity.x = -alpha3.velocity.x
                     alpha4.velocity.x = -alpha4.velocity.x
+            if alpha3.pos.x <-100 or alpha3.pos.y >100:
+                tkMessageBox.showinfo(title="Greetings", message="Hello World!")
+                restart()
             counter = 1
     if trigger == 'b' or trigger == 'B':
         #triggers the commands for beta decay
@@ -51,6 +65,9 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
                 else:
                     #when the electron hits the right or left boundary
                     electron.velocity.x = -electron.velocity.x
+            if electron.pos.x <-100 or electron.pos.y >100:
+                tkMessageBox.showinfo(title="Greetings", message="Hello World!")
+                restart()
             counter = 1
                 
     if trigger == 'g' or trigger == 'G':
@@ -67,6 +84,9 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
                 else:
                     #when the gamma ray hits the right or left boundary
                     gamma.velocity.x = -gamma.velocity.x
+            if gamma.pos.x <-100 or gamma.pos.y >100:
+                tkMessageBox.showinfo(title="Greetings", message="Hello World!")
+                restart()
             counter = 1
 
             
@@ -79,25 +99,31 @@ def wirecube (s): #setting the cube borders
            (s, -s, s), (-s, -s, s), (s, -s, s),(s, -s, -s)]
     for pt in pts:
         c.append(pos=pt)
-        
-scene = display(title='Radioactive Decay', x=0, y=0, background=(0,0,0)) #setting the size of the display screen
+
+
+#the controls window
+c = controls(x=0, y=0, width=350, height=350, range=60)
+bl = button(pos=(-30,30), height=30, width=40, text='Reset', action=lambda: restart())
+
+scene = display(title='Radioactive Decay', x=350, y=0, background=(0,0,0)) #setting the size of the display screen
 wirecube(100) #create the cube
 #wirecube(125)
 #wirecube(200)
 counter = 0
 
+
 atom = sphere(pos=(-80,0,0), radius=20, color=color.white)
 
 #---creating the electron---------
 electron = sphere(pos=(-80,5,0), radius=2, color=color.yellow)
-electronangle = 60
+electronangle = 20
 electronvelocity = 10
 electron.velocity = vector(electronvelocity*cos(electronangle),electronvelocity*sin(electronangle),0)
 #---------------------------------
 
 #---creating the gamma ray--------
 gamma = sphere(pos=(-80,5,0), radius=1, color=color.yellow, make_trail=true, retain=10)
-gammaangle = 60
+gammaangle = 20
 gammavelocity = 10
 gamma.velocity = vector(gammavelocity*cos(gammaangle),gammavelocity*sin(gammaangle),0)
 #---------------------------------
@@ -107,7 +133,7 @@ alpha1 = sphere(pos=(-80,5,0), radius=5, color=color.white)
 alpha2 = sphere(pos=(-85,0,0), radius=5, color=color.red)
 alpha3 = sphere(pos=(-75,0,0), radius=5, color=color.red)
 alpha4 = sphere(pos=(-80,-5,0), radius=5, color=color.white)
-alphaangle = 60
+alphaangle = 30
 alphavelocity = 5
 alpha1.velocity = vector(alphavelocity*cos(alphaangle),alphavelocity*sin(alphaangle),0)
 alpha2.velocity = vector(alphavelocity*cos(alphaangle),alphavelocity*sin(alphaangle),0)
