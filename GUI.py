@@ -1,6 +1,6 @@
 import sys
-import tkFileDialog
-from tkFileDialog import askopenfilename
+#import tkFileDialog
+#from tkFileDialog import askopenfilename
 import Tkinter
 from Tkinter import *
 
