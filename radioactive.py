@@ -89,14 +89,14 @@ counter = 0
 atom = sphere(pos=(-80,0,0), radius=20, color=color.white)
 
 #---creating the electron---------
-electron = sphere(pos=(0,5,0), radius=2, color=color.yellow)
+electron = sphere(pos=(-80,5,0), radius=2, color=color.yellow)
 electronangle = 60
 electronvelocity = 10
 electron.velocity = vector(electronvelocity*cos(electronangle),electronvelocity*sin(electronangle),0)
 #---------------------------------
 
 #---creating the gamma ray--------
-gamma = sphere(pos=(0,5,0), radius=1, color=color.yellow, make_trail=true, retain=10)
+gamma = sphere(pos=(-80,5,0), radius=1, color=color.yellow, make_trail=true, retain=10)
 gammaangle = 60
 gammavelocity = 10
 gamma.velocity = vector(gammavelocity*cos(gammaangle),gammavelocity*sin(gammaangle),0)
