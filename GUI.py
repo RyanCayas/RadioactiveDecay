@@ -3,7 +3,8 @@ import sys
 #from tkFileDialog import askopenfilename
 import Tkinter
 from Tkinter import *
-
+from PIL import ImageTk, Image
+import os
 
 
 main=Tk()
@@ -14,13 +15,17 @@ def open1():
     main.withdraw()
     import radioactive
 
-TitlePage = Label(main, text = "Main Menu", font = "Jokerman 50")
+img = ImageTk.PhotoImage(Image.open("atom.png"))
+panel = Label(main, image = img)
+panel.pack()
+
+TitlePage = Label(main, text = "Radioactive Decay", font = ("Source Sans Pro",50))
 TitlePage.pack()
-alpha = Button (main, text = "Alpha Decay", width=50, height=4, command = open1)
+alpha = Button (main, text = "Three Types of Decay", width=75, height=4, command = open1)
 alpha.pack()
-halflife = Button (main, text = "Half Life", width=50, height=4)
+halflife = Button (main, text = "User's Guide", width=75, height=4)
 halflife.pack(side= BOTTOM)
-guide = Button (main, text = "User's Guide", width=50, height=4)
+guide = Button (main, text = "Half Life Simulation", width=75, height=4)
 guide.pack(side = BOTTOM)
 
 main.mainloop()
