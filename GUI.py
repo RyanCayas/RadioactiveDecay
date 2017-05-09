@@ -6,17 +6,17 @@ from Tkinter import *
 from PIL import ImageTk, Image
 import os
 
-
+global main
 main=Tk()
 main.title("Main Menu")
 
 
 def open1():
-    main.withdraw()
+    main.destroy()
     import radioactive
 
 def open2():
-    main.withdraw()
+    main.destroy()
     import menuhalflife
 
 img = ImageTk.PhotoImage(Image.open("atom.png"))
