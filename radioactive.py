@@ -1,9 +1,16 @@
 from visual import*
 from visual.controls import *
 import numpy
+import sys
+import os
+
 
 def home():
-    exec(open('GUI.py').read())
+    #radioactive.visible = False
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+    #main.deiconify()
+    
     
 def restart():
     global atom
@@ -108,8 +115,8 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
                 alpha2.velocity=vector(0,0,0)
                 alpha3.velocity=vector(0,0,0)
                 alpha4.velocity=vector(0,0,0)
-                exec(open('alphadecay.py').read())
                 break
+        exec(open('alphadecay.py').read())
 
     if trigger == 'b' or trigger == 'B':
         restart()
@@ -129,9 +136,8 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
             if electron.pos.x >= wood1.pos.x - 7.5:
                 #when the electron has hit the boundaries of the wood
                 electron.velocity=vector(0,0,0)
-                exec(open('betadecay.py').read())
                 break
-                
+        exec(open('betadecay.py').read())
     if trigger == 'g' or trigger == 'G':
         restart()
         #triggers the commands for gamma decay
@@ -243,8 +249,8 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
                 #when the gamma ray has hit the boundaries of the metal
                 gamma.trail_object.visible = False
                 gamma.velocity=vector(0,0,0)
-                exec(open('gammadecay.py').read())
                 break
+        exec(open('gammadecay.py').read())
             
 def wirecube (s): #setting the cube borders
     c=curve (color=color.white, radius=1)
