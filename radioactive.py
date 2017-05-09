@@ -7,8 +7,7 @@ import os
 
 def home():
     #radioactive.visible = False
-    python = sys.executable
-    os.execl(python, python, * sys.argv)
+    exec(open('GUI.py').read())
     #main.deiconify()
     
     
@@ -370,3 +369,11 @@ metal1 = box(pos=(100,0,0), length=5, height=200, width=200, material = material
 
 while True:
     reaction() #runs the simulation showing the three types of decay indefinitely until the user exits the window
+    """main = Tk()
+    main.title("Controls")
+    alpha = Button (main, text = "Three Types of Decay", width=75, height=4)
+    alpha.pack(side = LEFT)
+    halflife = Button (main, text = "Half Life Simulation", width=75, height=4)
+    halflife.pack(side = RIGHT)
+    program = thread.start_new_thread(reaction,())
+    main.mainloop()"""

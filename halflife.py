@@ -5,10 +5,7 @@ from visual.controls import *
 import numpy
 
 def home():
-    main.deiconify()
-
-def restart():
-    main.deiconify()
+    exec(open('GUI.py').read())
         
 def cos(x): #returns the cosine equivalent of the angle (in degrees)
     return numpy.cos(x*numpy.pi/180)
@@ -29,9 +26,8 @@ graph = gdisplay(xtitle='Time', ytitle='Number of Atoms Left', x=500, y=0)
 funct1 = gcurve(color=color.cyan)
 
 #the controls window
-c = controls(x=0, y=0, width=300, height=200, range=60)
+c = controls(x=500, y=400, width=300, height=200, range=60)
 bl = button(pos=(-30,0), height=30, width=40, text='HOME', action=lambda: home())
-b2 = button(pos=(30,0), height=30, width=40, text='RESET', action=lambda: restart())
 
 xaxis = curve(pos=[(0,0,0), (L,0,0)])
 yaxis = curve(pos=[(0,0,0), (0,L,0)])
@@ -74,8 +70,8 @@ for i in range(Natoms):
 t=0.0
 while True:
     Remaining = Natoms*((0.5)**(t/Hlife))
-    funct1.plot(pos=(t,Remaining))
-
+    if Remaining > 0.1:
+        funct1.plot(pos=(t,Remaining))
     Remaining = int(Remaining)
     for i in range(Natoms-Remaining):
         rate(speed)
