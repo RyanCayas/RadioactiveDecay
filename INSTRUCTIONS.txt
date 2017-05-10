@@ -1,0 +1,14 @@
+To start the simulation for the three types of decay, run radioactive.py
+To start the simulation for halflife, run menuhalflife.py
+
+For the three types of decay:
+	Press A to simulate alpha decay
+	Press B to simulate beta decay
+	Press G to simulate gamma decay
+
+To restart the halflife simulation, close the program and run it again.
+
+Common VPython commands:
+	Right button drag or Ctrl-drag to rotate "camera" to view scene.
+	Middle button or Alt-drag to drag up or down to zoom in or out.
+  	On a two-button mouse, middle is left + right.

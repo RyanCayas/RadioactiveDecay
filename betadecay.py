@@ -1,7 +1,7 @@
 from Tkinter import *
 from PIL import ImageTk, Image
-import os
 
+#runs the script with image
 root = Tk()
 img = ImageTk.PhotoImage(Image.open("betadecay.png"))
 panel = Label(root, image = img)

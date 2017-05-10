@@ -1,11 +1,9 @@
 from visual import*
-from visual.controls import *
 import numpy
-
-def home():
-    exec(open('GUI.py').read())
+import time
+ 
     
-def restart():
+def restart(): #restarts the simulation, sets the values of the variables to its original value
     global atom
     global electron
     global electronangle
@@ -95,7 +93,7 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
                 atom26.color = color.white
             x+=1
 
-        while True:
+        while True: #alpha particles are emitted and continues to move
             rate(100)
             alpha1.pos += alpha1.velocity
             alpha2.pos += alpha2.velocity
@@ -108,9 +106,10 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
                 alpha2.velocity=vector(0,0,0)
                 alpha3.velocity=vector(0,0,0)
                 alpha4.velocity=vector(0,0,0)
+                time.sleep(1)
                 exec(open('alphadecay.py').read())
                 break
-
+        
     if trigger == 'b' or trigger == 'B':
         restart()
         #triggers the commands for beta decay
@@ -123,15 +122,16 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
                 atom26.color = color.white
             x+=1
         atom26.color = color.red
-        while True:
+        while True: #beta particle is emitted and continues to move
             rate(100)
             electron.pos += electron.velocity
             if electron.pos.x >= wood1.pos.x - 7.5:
                 #when the electron has hit the boundaries of the wood
                 electron.velocity=vector(0,0,0)
+                time.sleep(1)
                 exec(open('betadecay.py').read())
                 break
-                
+           
     if trigger == 'g' or trigger == 'G':
         restart()
         #triggers the commands for gamma decay
@@ -235,14 +235,14 @@ def reaction(): #sets what type of reaction will happen based on the user's inpu
                 atom46.color = color.white
             x+=1
             #end of cool transition----------------------------
-        while True:
+        while True: #gamma particles are emitted and continues to move
             rate(100)
             gamma.pos += gamma.velocity
-
             if gamma.pos.x >= metal1.pos.x - 7.5:
-                #when the gamma ray has hit the boundaries of the metal
+                #when the gamma particles has hit the boundaries of the metal
                 gamma.trail_object.visible = False
                 gamma.velocity=vector(0,0,0)
+                time.sleep(1)
                 exec(open('gammadecay.py').read())
                 break
             
@@ -256,17 +256,10 @@ def wirecube (s): #setting the cube borders
     for pt in pts:
         c.append(pos=pt)
 
-#the controls window
-c = controls(x=0, y=0, width=300, height=200, range=60)
-bl = button(pos=(-30,0), height=30, width=40, text='HOME', action=lambda: home())
-b2 = button(pos=(30,0), height=30, width=40, text='RESET', action=lambda: restart())
-
-scene = display(title='Radioactive Decay', x=350, y=0, background=(0,0,0)) #setting the size of the display screen
-scene.exit = False
-scene.material = materials.plastic
+scene = display(title='Radioactive Decay', x=0, y=0, background=(0,0,0)) #setting the size of the display screen
+scene.material = materials.plastic #default material for the scene
 wirecube(100) #create the cube
 
-#atom = sphere(pos=(-80,0,0), radius=20, color=color.white, material = materials.plastic)
 #---creating the atom---
 
 atom1 = sphere(pos=(-80,0,-5), radius=5, color=color.white)
